@@ -16,7 +16,7 @@
 package org.prx.playerhater.plugins;
 
 import org.prx.playerhater.BroadcastReceiver;
-import org.prx.android.playerhater.R;
+import es.overtun.overtunesapp.R;
 import org.prx.playerhater.Song;
 import android.annotation.TargetApi;
 import android.app.Activity;

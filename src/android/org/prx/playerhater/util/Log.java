@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.prx.playerhater.util;
 
-import org.prx.android.playerhater.BuildConfig;
+import es.overtun.overtunesapp.BuildConfig;
 
 public class Log {
 	

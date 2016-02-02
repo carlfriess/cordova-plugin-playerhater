@@ -15,7 +15,7 @@
  ******************************************************************************/
 package org.prx.playerhater.plugins;
 
-import org.prx.android.playerhater.R;
+import es.overtun.overtunesapp.R;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.net.Uri;

@@ -21,7 +21,7 @@ import java.util.Set;
 
 import org.prx.playerhater.PlayerHater;
 import org.prx.playerhater.PlayerHaterPlugin;
-import org.prx.android.playerhater.R;
+import es.overtun.overtunesapp.R;
 import org.prx.playerhater.plugins.PluginCollection;
 
 import android.content.Context;

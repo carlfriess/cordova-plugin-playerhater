@@ -29,7 +29,7 @@ public class Receiver extends BroadcastReceiver implements
 		RemoteControlButtonReceiver {
 
 	private static final HeadphoneButtonGestureHelper sGestureHelper = new HeadphoneButtonGestureHelper();
-	public static final String REMOTE_CONTROL_BUTTON = "org.prx.playerhater.REMOTE_CONTROL";
+	public static final String REMOTE_CONTROL_BUTTON = "es.overtun.overtunesapp.REMOTE_CONTROL";
 	
 	public Receiver() {
 		super();
