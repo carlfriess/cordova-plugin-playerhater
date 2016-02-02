@@ -50,6 +50,7 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 
 		this.connectionCallbackContext = null;
 
+        /*
 		if ( mCachedWebView != null ) {
 			// this is a hack to destroy the old web view if it exists, which happens when audio is playing, the main app activity is 'killed' but the audio keeps playing, and then the app is restarted.
 			// performing the hack here instead of when the app activity is destroyed because the web view continues to function even though the activity is killed, so it will process javascript messages
@@ -59,6 +60,7 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 			mCachedWebView.loadData(summary, "text/html", null);
 		}
 		mCachedWebView = webView;
+         */
 				
 		Log.d(LOG_TAG, "PlayerHater Plugin initialized");
 	}
