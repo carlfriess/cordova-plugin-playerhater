@@ -29,6 +29,55 @@ import android.os.Build;
 import android.view.KeyEvent;
 import android.widget.RemoteViews;
 
+import java.net.URL;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import java.io.InputStream;
+import java.net.URLConnection;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.util.Objects;
+
+import android.os.StrictMode;
+import android.os.AsyncTask;
+
+class NotificationCoverConnectionInput {
+	public RemoteViews mNotificationView;
+	public int id;
+	public String urlString;
+	public NotificationCoverConnectionInput (RemoteViews a, int b, String c) {
+		mNotificationView = a;
+		id = b;
+		urlString = c;
+	}
+}
+
+class NotificationCoverConnection extends AsyncTask<NotificationCoverConnectionInput, Void, Void> {
+	@Override
+	protected Void doInBackground(NotificationCoverConnectionInput... i) {
+
+		Bitmap bm = null;
+		try {
+			URL url = new URL(i[0].urlString);
+			URLConnection urlConnection = url.openConnection();
+			InputStream in = new BufferedInputStream(urlConnection.getInputStream());
+			try {
+				bm = BitmapFactory.decodeStream(in);
+			}
+			finally {
+				in.close();
+			}
+			in.close();
+			i[0].mNotificationView.setImageViewBitmap(i[0].id, bm);
+		} catch (IOException e) {
+			i[0].mNotificationView.setImageViewResource(i[0].id, R.drawable.icon);
+		}
+
+		return null;
+
+	}
+}
+
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class TouchableNotificationPlugin extends NotificationPlugin {
 
@@ -102,8 +151,12 @@ public class TouchableNotificationPlugin extends NotificationPlugin {
 
 	@Override
 	protected Notification getNotification() {
-		if (mNotification == null)
+		if (mNotification == null) {
 			mNotification = buildNotification();
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				//mNotification.bigContentView = getNotificationView();
+			}
+		}
 		return mNotification;
 	}
 
@@ -149,7 +202,7 @@ public class TouchableNotificationPlugin extends NotificationPlugin {
 
 	protected RemoteViews buildNotificationView() {
 		return new RemoteViews(getContext().getPackageName(),
-				R.layout.nypr_ph_hc_notification);
+				R.layout.zzz_ph_hc_notification);
 	}
 
 	private PendingIntent getMediaButtonPendingIntent(int keycode) {
@@ -170,8 +223,8 @@ public class TouchableNotificationPlugin extends NotificationPlugin {
 				.setSmallIcon(R.drawable.zzz_ph_ic_notification)
 				.setTicker("Playing: " + mNotificationTitle)
 				.setContent(getNotificationView())
-				.setContentIntent(mContentIntent).setOngoing(true).setWhen(0)
-				.setOnlyAlertOnce(true);
+				.setContentIntent(mContentIntent).setOngoing(true).setWhen(0);
+				//.setOnlyAlertOnce(true);
 	}
 
 	protected void setTextViewText(int id, String text) {
@@ -200,7 +253,9 @@ public class TouchableNotificationPlugin extends NotificationPlugin {
 
 	protected void setImageViewUri(int id, Uri contentUri) {
 		if (mNotificationView != null && contentUri != null) {
-			mNotificationView.setImageViewUri(id, contentUri);
+			NotificationCoverConnectionInput input = new NotificationCoverConnectionInput(mNotificationView, id, contentUri.toString());
+			new NotificationCoverConnection().execute(input);
 		}
 	}
 }
+

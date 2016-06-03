@@ -45,7 +45,7 @@ public class ExpandableNotificationPlugin extends TouchableNotificationPlugin {
 					mNotificationTitle);
 			mExpandedView.setTextViewText(R.id.zzz_ph_notification_text,
 					mNotificationText);
-			mExpandedView.setImageViewUri(R.id.zzz_ph_notification_image,
+			setImageViewUri(R.id.zzz_ph_notification_image,
 					mNotificationImageUrl);
 		}
 		return mExpandedView;
@@ -83,12 +83,28 @@ public class ExpandableNotificationPlugin extends TouchableNotificationPlugin {
 		super.setImageViewResource(viewId, resourceId);
 	}
 
-	@Override
+	/*@Override
+	public void onAlbumArtChanged(Uri url) {
+		mNotificationImageUrl = url;
+		//super.setImageViewUri(R.id.zzz_ph_notification_image, mNotificationImageUrl);
+		setImageViewUri(R.id.zzz_ph_notification_image_big, mNotificationImageUrl);
+	}*/
+
+	/*@Override
 	protected void setImageViewUri(int viewId, Uri contentUri) {
 		super.setImageViewUri(viewId, contentUri);
 		if (mExpandedView != null && contentUri != null) {
 			mExpandedView.setImageViewUri(viewId, contentUri);
 		}
+	}*/
+
+	@Override
+	protected void setImageViewUri(int viewId, Uri contentUri) {
+		if (mExpandedView != null && contentUri != null) {
+			NotificationCoverConnectionInput input = new NotificationCoverConnectionInput(mExpandedView, R.id.zzz_ph_notification_image_big, contentUri.toString());
+			new NotificationCoverConnection().execute(input);
+		}
+		super.setImageViewUri(viewId, contentUri);
 	}
 
 	@Override

@@ -24,7 +24,6 @@ import android.os.Environment;
 import android.os.RemoteException;
 import android.util.Log;
 
-
 public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterruptListener, OnAudioStateUpdatedListener{
 
 	protected static final String LOG_TAG = "PlayerHaterPlugin";
@@ -32,7 +31,7 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 
 	protected PhoneHandler mPhoneHandler=null;
 	protected BasicAudioPlayer mAudioPlayer=null;
-	protected CallbackContext connectionCallbackContext;
+	protected static CallbackContext connectionCallbackContext;
 
 	@Override
 	public void initialize(CordovaInterface cordova, CordovaWebView webView) {
@@ -430,12 +429,12 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 	@Override
 	public void onAudioInterruptDetected(INTERRUPT_TYPE type, boolean trackInterrupt) {
 		Log.d(LOG_TAG,"Audio Interrupt Detected - Stop audio if necessary.");
-		mAudioPlayer.interruptAudio(type,trackInterrupt);
+		mAudioPlayer.interruptAudio(type, trackInterrupt);
 	}
 
 	@Override
 	public void onAudioInterruptCompleted(INTERRUPT_TYPE type, boolean restart) {
-		Log.d(LOG_TAG,"Audio Interrupt Completed - Restart audio if necessary.");
+		Log.d(LOG_TAG, "Audio Interrupt Completed - Restart audio if necessary.");
 
 		try {
 			mAudioPlayer.clearAudioInterrupt(type,restart);
@@ -445,7 +444,7 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 	}
 
 	@Override
-	public void onAudioStateUpdated(STATE state) {		
+	public void onAudioStateUpdated(STATE state) {
 		Log.d(LOG_TAG,"onAudioStateUpdated " + state.ordinal() + "; " + state.toString() );
 		if (this.connectionCallbackContext != null) {
 			JSONObject o=new JSONObject();
@@ -547,6 +546,22 @@ public class PlayerHaterPlugin extends CordovaPlugin implements OnAudioInterrupt
 			return true;
 		} else {
 			return false;
+		}
+	}
+
+	public static void mediaButtonPressed (String eventName) {
+		if (connectionCallbackContext != null) {
+			JSONObject o=new JSONObject();
+			PluginResult result=null;
+			try {
+				o.put("type", eventName);
+				result = new PluginResult(PluginResult.Status.OK, o);
+			} catch (JSONException e){
+				result = new PluginResult(PluginResult.Status.ERROR, e.getMessage());
+			} finally {
+				result.setKeepCallback(true);
+				connectionCallbackContext.sendPluginResult(result);
+			}
 		}
 	}
 

@@ -38,7 +38,8 @@ import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.media.RemoteControlClient;
-import android.os.IBinder;
+import android.os.*;
+import android.os.Process;
 import android.view.KeyEvent;
 
 @SuppressLint("InlinedApi")
@@ -320,29 +321,31 @@ public abstract class PlayerHaterService extends Service implements
 
 	public void onRemoteControlButtonPressed(int button) {
 		switch (button) {
-		case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
-			if (isPlaying()) {
-				pause();
-			} else {
+			case KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE:
+				if (isPlaying()) {
+					pause();
+				} else {
+					play();
+				}
+				break;
+			case KeyEvent.KEYCODE_MEDIA_PLAY:
 				play();
-			}
-			break;
-		case KeyEvent.KEYCODE_MEDIA_PLAY:
-			play();
-			break;
-		case KeyEvent.KEYCODE_MEDIA_PAUSE:
-			pause();
-			break;
-		case KeyEvent.KEYCODE_MEDIA_STOP:
-			stop();
-			android.os.Process.killProcess(android.os.Process.myPid());
-			break;
-		case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
-			skipBack();
-			break;
-		case KeyEvent.KEYCODE_MEDIA_NEXT:
-			skip();
-			break;
+				break;
+			case KeyEvent.KEYCODE_MEDIA_PAUSE:
+				pause();
+				break;
+			case KeyEvent.KEYCODE_MEDIA_STOP:
+				stop();
+				android.os.Process.killProcess(Process.myPid());
+				break;
+			case KeyEvent.KEYCODE_MEDIA_PREVIOUS:
+				skipBack();
+				org.nypr.cordova.playerhaterplugin.PlayerHaterPlugin.mediaButtonPressed("previous");
+				break;
+			case KeyEvent.KEYCODE_MEDIA_NEXT:
+				skip();
+				org.nypr.cordova.playerhaterplugin.PlayerHaterPlugin.mediaButtonPressed("next");
+				break;
 		}
 	}
 

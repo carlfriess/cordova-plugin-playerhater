@@ -10,14 +10,14 @@
     
     <plugin
         name="org.prx.playerhater.plugins.TouchableNotificationPlugin"
-        enabled="true"
-        disabled="false"
-        prebind="true" />    
+        enabled="false"
+        disabled="true" />
     
     <plugin
         name="org.prx.playerhater.plugins.ExpandableNotificationPlugin"
-        enabled="false"
-        disabled="true" />
+        enabled="true"
+        disabled="false"
+        prebind="true" />
 
     <plugin
         name="org.prx.playerhater.plugins.LockScreenControlsPlugin"

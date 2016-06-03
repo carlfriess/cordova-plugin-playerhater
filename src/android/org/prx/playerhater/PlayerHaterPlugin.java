@@ -318,4 +318,5 @@ public interface PlayerHaterPlugin {
 	void onAlbumTitleChanged(String albumTitle);
 
     void onPlayerHaterShutdown();
+
 }

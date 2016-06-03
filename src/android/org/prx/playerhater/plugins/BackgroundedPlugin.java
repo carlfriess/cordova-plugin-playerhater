@@ -73,7 +73,7 @@ public class BackgroundedPlugin extends HandlerThread implements
 	}
 
 	public BackgroundedPlugin(PlayerHaterPlugin plugin,
-			Looper foregroundLooper, Integer... foregroundActions) {
+							  Looper foregroundLooper, Integer... foregroundActions) {
 		super("BackgroundedPlugin");
 		mPlugin = plugin;
 		mForegroundActions = new HashSet<Integer>(
@@ -521,4 +521,5 @@ public class BackgroundedPlugin extends HandlerThread implements
 
 		}
 	}
+
 }
