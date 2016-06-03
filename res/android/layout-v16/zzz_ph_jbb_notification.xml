@@ -245,7 +245,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/zzz_ph_skip_button"
                 android:layout_toRightOf="@id/zzz_ph_back_button"
                 android:contentDescription="@string/zzz_ph_toggle_play"
                 android:padding="8dp"
